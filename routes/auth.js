@@ -1,19 +1,25 @@
 const express = require('express');
 const router = express.Router();
-
-
-//@Route GET /api/auth
-//@desc get logged in user
-//@access private
-router.get('/',(req,res)=>{
-res.send('get logged in user');
-});
+const { check } = require('express-validator');
+const auth = require('../middleware/auth');
+const { loginUser, getLoggedUser } = require('../controllers/auth');
 
 //@Route Post /api/auth
 //@desc log in user
 //@access public
-router.post('/',(req,res)=>{
-res.send('log in user');
-});
+router
+  .route('/')
+  .post(
+    [
+      check('email', 'Please enter a valid email').isEmail(),
+      check('password', 'password is required').exists()
+    ],
+    loginUser
+  );
 
-module.exports=router;
+//@Route GET /api/auth
+//@desc get logged in user
+//@access private
+router.route('/').get(auth, getLoggedUser);
+
+module.exports = router;
