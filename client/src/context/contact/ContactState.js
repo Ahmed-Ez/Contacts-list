@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import uuid from 'uuid';
-import contactContext from './contactContext';
+import ContactContext from './contactContext';
 import contactReducer from './contactReducer';
 import {
   ADD_CONTACT,
@@ -11,7 +11,7 @@ import {
   FILTER_CONTACTS,
   CLEAR_FILTER
 } from '../types';
-import { contextsKey } from 'express-validator/src/base';
+
 
 const ContactState = props => {
   const initialState = {
@@ -100,7 +100,7 @@ const ContactState = props => {
   };
 
   return (
-    <contactContext.Provider
+    <ContactContext.Provider
       value={{
         contacts: state.contacts,
         current: state.current,
@@ -115,7 +115,7 @@ const ContactState = props => {
       }}
     >
       {props.children}
-    </contactContext.Provider>
+    </ContactContext.Provider>
   );
 };
 
